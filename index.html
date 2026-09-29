@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Satu Tahun Bersamamu</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#14173a;--ink:#f6ead9;--dim:#a9a6c4;--glow:#ffb88c;--rose:#ff6f8e;--line:#2b2f63;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.7 Nunito,system-ui,sans-serif}
+.serif{font-family:Fraunces,Georgia,serif}
+section{max-width:640px;margin:0 auto;padding:72px 24px}
+#hero,#wait{min-height:100vh;display:flex;flex-direction:column;justify-content:center;text-align:center}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14px,1fr));gap:6px;margin:0 auto 40px;max-width:520px}
+#grid i{aspect-ratio:1;border-radius:50%;background:var(--line);transition:background .4s,box-shadow .4s}
+#grid i.on{background:var(--glow);box-shadow:0 0 8px rgba(255,184,140,.7)}
+#grid i.last{background:var(--rose);box-shadow:0 0 14px var(--rose)}
+h1{font:600 clamp(2.6rem,10vw,4.6rem)/1.05 Fraunces,Georgia,serif;margin:0 0 12px;letter-spacing:-.01em}
+h2{font:italic 400 clamp(1.6rem,6vw,2.2rem)/1.2 Fraunces,Georgia,serif;margin:0 0 20px;color:var(--glow)}
+.sub{color:var(--dim);margin:0}
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center}
+.count div{border:1px solid var(--line);border-radius:14px;padding:18px 4px}
+.count b{display:block;font:600 2rem/1 Fraunces,Georgia,serif;color:var(--glow);font-variant-numeric:tabular-nums}
+.count span{font-size:.8rem;color:var(--dim)}
+.letter p{margin:0 0 1.1em}
+.sig{font:italic 400 1.4rem Fraunces,Georgia,serif;color:var(--rose);margin-top:28px}
+ul.reasons{list-style:none;padding:0;margin:0}
+ul.reasons li{padding:16px 0 16px 28px;border-bottom:1px solid var(--line);position:relative}
+ul.reasons li::before{content:"♥";position:absolute;left:0;color:var(--rose);font-size:.9rem;top:19px}
+button{font:600 1rem Nunito,sans-serif;background:var(--rose);color:#fff;border:0;border-radius:999px;padding:14px 30px;cursor:pointer;transition:transform .2s}
+button:hover{transform:scale(1.04)}
+button:focus-visible{outline:3px solid var(--glow);outline-offset:3px}
+#final{text-align:center;display:none}
+#final.show{display:block;animation:in 1.2s ease both}
+#final .big{font:600 clamp(2rem,8vw,3.4rem)/1.15 Fraunces,Georgia,serif}
+@keyframes in{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.heart{position:fixed;bottom:-30px;color:var(--rose);pointer-events:none;animation:up linear forwards;z-index:9}
+@keyframes up{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<section id="wait">
+  <h1>Sebentar lagi.</h1>
+  <p class="sub" style="margin-bottom:36px">Ada sesuatu yang menunggu untuk <span id="wnama"></span> pada 1 Desember 2026.</p>
+  <div class="count" style="max-width:460px;margin:0 auto;width:100%">
+    <div><b id="cd">0</b><span>hari</span></div>
+    <div><b id="ch">0</b><span>jam</span></div>
+    <div><b id="cm">0</b><span>menit</span></div>
+    <div><b id="cs">0</b><span>detik</span></div>
+  </div>
+</section>
+
+<div id="main" hidden>
+<section id="hero">
+  <div id="grid" aria-hidden="true"></div>
+  <h1 id="judul">365 hari,<br>satu kamu.</h1>
+  <p class="sub" id="dari"></p>
+</section>
+
+<section>
+  <h2>Sudah berapa lama kita bersama</h2>
+  <div class="count">
+    <div><b id="d">0</b><span>hari</span></div>
+    <div><b id="h">0</b><span>jam</span></div>
+    <div><b id="m">0</b><span>menit</span></div>
+    <div><b id="s">0</b><span>detik</span></div>
+  </div>
+</section>
+
+<section class="letter">
+  <h2>Untuk <span id="untuk"></span></h2>
+  <p>Setahun lalu, aku belum tahu bahwa hari-hari biasa bisa jadi terasa istimewa hanya karena ada kamu di dalamnya.</p>
+  <p>Terima kasih sudah sabar, sudah tertawa bersamaku, dan sudah tetap tinggal di hari-hari yang tidak mudah. Bersamamu, aku merasa pulang.</p>
+  <p>Setahun ini baru permulaan. Aku ingin melewati tahun kedua, ketiga, dan seterusnya, selama kamu masih mau menggenggam tanganku.</p>
+  <div class="sig">— <span id="aku"></span></div>
+</section>
+
+<section>
+  <h2>Hal-hal yang aku syukuri darimu</h2>
+  <ul class="reasons">
+    <li>Caramu tertawa, yang bikin hari buruk jadi ringan.</li>
+    <li>Kamu selalu mendengarkan, bahkan saat aku cuma mengeluh.</li>
+    <li>Kamu membuat hal-hal sederhana terasa seperti petualangan.</li>
+    <li>Kamu selalu sabar ngadepin sifatku.</li>
+  </ul>
+</section>
+
+<section style="text-align:center">
+  <p class="sub" style="margin-bottom:20px">Ada satu hal lagi yang ingin aku bilang.</p>
+  <button id="btn">Buka</button>
+</section>
+
+<section id="final">
+  <div class="big" style="color:var(--rose)">Happy Anniversary sayang ❤️</div>
+  <p class="sub" style="margin-top:20px">Aku sayang kamu, hari ini dan setiap hari setelahnya.</p>
+</section>
+
+</div>
+
+<script>
+// ===== Ubah tiga baris ini =====
+var NAMA_KAMU = "Fahrur";
+var NAMA_PASANGAN = "Ecaaa";
+var TANGGAL_JADIAN = "2025-12-01T00:00:00"; // mulai pacaran
+var HARI_H = "2026-12-01T00:00:00"; // hari peringatan 1 tahun
+// ===============================
+var $ = function(id){return document.getElementById(id)};
+$("dari").textContent = "Dari " + NAMA_KAMU + ", untuk " + NAMA_PASANGAN;
+$("untuk").textContent = NAMA_PASANGAN;
+$("aku").textContent = NAMA_KAMU;
+$("wnama").textContent = NAMA_PASANGAN;
+
+var g = $("grid"), dots = [];
+for (var i = 0; i < 365; i++){ var e = document.createElement("i"); g.appendChild(e); dots.push(e); }
+var n = 0, reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+var target = 365;
+function fill(){
+  var step = reduce ? 365 : 6;
+  for (var k = 0; k < step && n < target; k++){ dots[n++].className = "on"; }
+  if (n < target) setTimeout(fill, 14); else if (n > 0) dots[n-1].className = "last";
+}
+var shown = false;
+function show(){
+  if (shown) return; shown = true;
+  $("wait").style.display = "none";
+  $("main").hidden = false;
+  scrollTo(0, 0);
+  fill();
+}
+function cd(){
+  var t = Math.floor((new Date(HARI_H).getTime() - Date.now()) / 1000);
+  if (t <= 0){ show(); return; }
+  $("cd").textContent = Math.floor(t / 86400);
+  $("ch").textContent = Math.floor(t % 86400 / 3600);
+  $("cm").textContent = Math.floor(t % 3600 / 60);
+  $("cs").textContent = Math.floor(t % 60);
+}
+cd(); setInterval(cd, 1000);
+
+function tick(){
+  var t = Math.max(0, Date.now() - new Date(TANGGAL_JADIAN).getTime()) / 1000;
+  $("d").textContent = Math.floor(t / 86400);
+  $("h").textContent = Math.floor(t % 86400 / 3600);
+  $("m").textContent = Math.floor(t % 3600 / 60);
+  $("s").textContent = Math.floor(t % 60);
+}
+tick(); setInterval(tick, 1000);
+
+$("btn").onclick = function(){
+  $("final").classList.add("show");
+  $("final").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+  if (reduce) return;
+  for (var i = 0; i < 28; i++){
+    var h = document.createElement("span");
+    h.className = "heart"; h.textContent = "♥";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = 14 + Math.random() * 26 + "px";
+    h.style.animationDuration = 3 + Math.random() * 3 + "s";
+    h.style.animationDelay = Math.random() * 1.2 + "s";
+    document.body.appendChild(h);
+    setTimeout(function(x){x.remove()}, 7500, h);
+  }
+};
+</script>
+</body>
+</html>
