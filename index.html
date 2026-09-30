@@ -33,6 +33,8 @@ ul.reasons li::before{content:"♥";position:absolute;left:0;color:var(--rose);f
 button{font:600 1rem Nunito,sans-serif;background:var(--rose);color:#fff;border:0;border-radius:999px;padding:14px 30px;cursor:pointer;transition:transform .2s}
 button:hover{transform:scale(1.04)}
 button:focus-visible{outline:3px solid var(--glow);outline-offset:3px}
+.music-toggle{position:fixed;right:max(20px,env(safe-area-inset-right,0px));bottom:max(20px,env(safe-area-inset-bottom,0px));z-index:10;width:52px;height:52px;padding:0;font-size:1.4rem;line-height:1;box-shadow:0 4px 18px rgba(0,0,0,.25)}
+#music-toggle[aria-pressed="true"]{background:var(--glow);color:var(--bg)}
 #final{text-align:center;display:none}
 #final.show{display:block;animation:in 1.2s ease both}
 #final .big{font:600 clamp(2rem,8vw,3.4rem)/1.15 Fraunces,Georgia,serif}
@@ -43,6 +45,9 @@ button:focus-visible{outline:3px solid var(--glow);outline-offset:3px}
 </style>
 </head>
 <body>
+<button id="music-toggle" class="music-toggle" type="button" aria-label="Putar musik" aria-pressed="false" title="Putar musik">♫</button>
+<audio id="music-wait" src="countdown.mp3" preload="auto" loop></audio>
+<audio id="music-main" preload="auto" loop><source src="lagu-utama.mp3" type="audio/mp4"></audio>
 <section id="wait">
   <h1>Sebentar lagi.</h1>
   <p class="sub" style="margin-bottom:36px">Ada sesuatu yang menunggu untuk <span id="wnama"></span> pada 1 Desember 2026.</p>
@@ -114,6 +119,36 @@ $("untuk").textContent = NAMA_PASANGAN;
 $("aku").textContent = NAMA_KAMU;
 $("wnama").textContent = NAMA_PASANGAN;
 
+var musicWait = $("music-wait"), musicMain = $("music-main");
+var currentMusic = musicWait, musicEnabled = true, musicToggle = $("music-toggle");
+function updateMusicToggle(){
+  var playing = !currentMusic.paused;
+  musicToggle.setAttribute("aria-pressed", String(playing));
+  musicToggle.setAttribute("aria-label", playing ? "Jeda musik" : "Putar musik");
+  musicToggle.title = playing ? "Jeda musik" : "Putar musik";
+}
+function playCurrentMusic(){
+  if (!musicEnabled) return;
+  var playback = currentMusic.play();
+  if (playback && playback.catch) playback.catch(updateMusicToggle);
+  updateMusicToggle();
+}
+musicWait.addEventListener("play", updateMusicToggle);
+musicWait.addEventListener("pause", updateMusicToggle);
+musicMain.addEventListener("play", updateMusicToggle);
+musicMain.addEventListener("pause", updateMusicToggle);
+musicToggle.onclick = function(){
+  if (currentMusic.paused){
+    musicEnabled = true;
+    playCurrentMusic();
+  } else {
+    musicEnabled = false;
+    currentMusic.pause();
+    updateMusicToggle();
+  }
+};
+playCurrentMusic();
+
 var g = $("grid"), dots = [];
 for (var i = 0; i < 365; i++){ var e = document.createElement("i"); g.appendChild(e); dots.push(e); }
 var n = 0, reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -128,6 +163,9 @@ function show(){
   if (shown) return; shown = true;
   $("wait").style.display = "none";
   $("main").hidden = false;
+  musicWait.pause();
+  currentMusic = musicMain;
+  playCurrentMusic();
   scrollTo(0, 0);
   fill();
 }
